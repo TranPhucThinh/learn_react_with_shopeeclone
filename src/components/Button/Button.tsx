@@ -10,7 +10,7 @@ const Button = (props: ButtonProps) => {
   const newClassName = disabled ? className + ' cursor-not-allowed' : className
 
   return (
-    <button className={newClassName} disabled={disabled}>
+    <button className={newClassName} disabled={disabled} {...rest}>
       {isLoading && (
         <svg
           aria-hidden='true'

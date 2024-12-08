@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 
 import { URL_LOGIN, URL_LOGOUT, URL_REGISTER } from 'src/api/auth.api'
 import { AuthResponse } from 'src/types/auth.type'
-import { clearLS, getAccessTokeFromLS, setAccessTokenToLS } from './auth'
+import { clearLS, getAccessTokeFromLS, setAccessTokenToLS, setProfileToLS } from './auth'
 
 class Http {
   instance: AxiosInstance
@@ -34,9 +34,11 @@ class Http {
     this.instance.interceptors.response.use(
       (response) => {
         if (response.config.url === URL_LOGIN || response.config.url === URL_REGISTER) {
+          const data = response.data as AuthResponse
           this.accessToken = (response.data as AuthResponse).data.access_token
 
           setAccessTokenToLS(this.accessToken)
+          setProfileToLS(data.data.user)
         } else if (response.config.url === URL_LOGOUT) {
           this.accessToken = ''
           clearLS()

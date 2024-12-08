@@ -8,12 +8,13 @@ import { AppContext } from 'src/contexts/app.context'
 import Popover from '../Popover'
 
 const Header = () => {
-  const { isAuthenticated, setIsAuthenticated, profile } = useContext(AppContext)
+  const { isAuthenticated, setIsAuthenticated, profile, setProfile } = useContext(AppContext)
 
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
     onSuccess: () => {
       setIsAuthenticated(false)
+      setProfile(null)
     }
   })
 
