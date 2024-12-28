@@ -21,7 +21,7 @@ const ProductList = () => {
   const queryConfig: QueryConfig = omitBy(
     {
       page: queryParams.page || '1',
-      limit: queryParams.limit,
+      limit: queryParams.limit || '20',
       sort_by: queryParams.sort_by,
       category: queryParams.category,
       exclude: queryParams.exclude,
