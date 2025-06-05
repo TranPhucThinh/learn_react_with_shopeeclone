@@ -9,15 +9,12 @@ import authApi from 'src/api/auth.api'
 import Button from 'src/components/Button'
 import Input from 'src/components/Input/Input'
 import { AppContext } from 'src/contexts/app.context'
-import { ErrorResponse, SuccessResponse } from 'src/types/utils.type'
+import { SuccessResponse } from 'src/types/utils.type'
 import { Schema, schema } from 'src/utils/rules'
 import { isAxiosErrorUnprocessableEntity } from 'src/utils/utils'
 
-export interface FormData {
-  email?: string
-  password?: string
-  confirm_password?: string
-}
+type FormData = Pick<Schema, 'email' | 'password' | 'confirm_password'>
+const registerSchema = schema.pick(['email', 'password', 'confirm_password'])
 
 const Register = () => {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
@@ -28,12 +25,12 @@ const Register = () => {
     handleSubmit,
     setError,
     formState: { errors }
-  } = useForm<Schema>({
-    resolver: yupResolver(schema)
+  } = useForm<FormData>({
+    resolver: yupResolver(registerSchema)
   })
 
   const registerAccountMutation = useMutation({
-    mutationFn: (body: Omit<Schema, 'confirm_password'>) => authApi.registerAccount(body)
+    mutationFn: (body: Omit<FormData, 'confirm_password'>) => authApi.registerAccount(body)
   })
 
   const onSubmit = handleSubmit((data) => {
