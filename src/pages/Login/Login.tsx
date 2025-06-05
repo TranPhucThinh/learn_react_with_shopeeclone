@@ -9,8 +9,10 @@ import Button from 'src/components/Button'
 import Input from 'src/components/Input/Input'
 import { AppContext } from 'src/contexts/app.context'
 import { ErrorResponse } from 'src/types/utils.type'
-import { LoginSchema, loginSchema } from 'src/utils/rules'
+import { LoginSchema, loginSchema, Schema } from 'src/utils/rules'
 import { isAxiosErrorUnprocessableEntity } from 'src/utils/utils'
+
+type FormData = Pick<Schema, 'email' | 'password'>
 
 const Login = () => {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
@@ -21,7 +23,7 @@ const Login = () => {
     handleSubmit,
     setError,
     formState: { errors }
-  } = useForm<LoginSchema>({
+  } = useForm<FormData>({
     resolver: yupResolver(loginSchema)
   })
 

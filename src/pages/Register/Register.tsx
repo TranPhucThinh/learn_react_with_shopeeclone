@@ -13,11 +13,7 @@ import { ErrorResponse, SuccessResponse } from 'src/types/utils.type'
 import { Schema, schema } from 'src/utils/rules'
 import { isAxiosErrorUnprocessableEntity } from 'src/utils/utils'
 
-export interface FormData {
-  email?: string
-  password?: string
-  confirm_password?: string
-}
+export type FormData = Pick<Schema, 'email' | 'password' | 'confirm_password'>
 
 const Register = () => {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
